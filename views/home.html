@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+
+<!-- 	
+	This file is rendered by express.js, when the home url of the chat is opened in a browser.
+	It doesn't do much, except showing the create button for the chat.
+ -->
+
+<html>
+
+<head>
+
+	<title>Chat OrthoMundi</title>
+
+	<link type="text/css" rel="stylesheet" href="css/stylesheet.css" />
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+	<header class="homebanner" >
+
+		<!--
+			<h1 class="homebannertext">
+				<a href="http://tutorialzine.com/2014/03/nodejs-private-webchat/" id="logo">Tutorial<span>zine</span></a>
+			</h1>
+		-->
+
+		<style type="text/css">
+
+			header{text-align: center;}
+			ul {width:780px; height: 40px; left:50%; margin-left:-325px; margin-top:27px; position: absolute; float: left;}
+			ul li {display:block; float:left; margin-right: 20px;}
+			ul li a{color:white; font-family: Yanone; font-size: 26px; text-decoration: none; position:relative;}
+			li:hover{text-decoration: underline;}
+			ul li a img{width:40px;height:40px; margin-top:-15px; display:inline-block; position: absolute; left:-40px;}
+			ul li a p{position:relative; margin-right:40px; font-size:24px; margin-top:-10px;}
+			
+		
+		</style>
+
+		<ul>
+			<li><a href="http://www.orthomundishop.com.br" target="_blank"><img src="img/cart.png"><p style="margin-left:10px;">Loja Online</p></a></li>
+			<li><a href="http://www.orthomundi.com.br" target="_blank"><img src="img/site.png" ><p>Site Institucional</p></a></li>
+			<li><a href="http://www.facebook.com/orthomundi" target="_blank"><img src="img/face.png" ></p>Página no Facebook</p></a></li>
+			<li style="margin-left:40px;"><a href="javascript:void(0)"><img src="img/fone.png" ><p>0800 510 3001</p></a></li>
+
+		</ul>
+
+	</header>
+
+	<section>
+
+		<div class="homesection">
+
+			<div class="node">
+				<img src="img/nodejslogo.png" alt="nodelogo" id="nodelogo"/>
+				<h2 id="chat">Atendimento online</h2>
+			</div>
+
+			<a title="Create" href="/create" id="create">
+				<div id="createbutton">
+					<div id="little">Requisitar atendimento</div>
+					<div id="big">Entrar</div>
+				</div>
+			</a>
+
+		<!--
+			<div class="tutorial">
+				<a title="Download the source code." href="http://tutorialzine.com/2014/03/nodejs-private-webchat/" id="tutorial">
+					or download a copy of the source code here
+				</a>
+			</div>
+		-->
+
+		</div>
+
+	</section>
+
+</body>
+</html>

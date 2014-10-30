@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+
+<!--
+	This file is rendered by express.js, when the rurl /chat/123456 is visited in a browser.
+	It includes jQuery, socket.io.js (it is automatically served by the socket.io library), 
+	and a few more JavaScript files that you should check out.
+-->
+
+<html>
+
+<head>
+
+	<title>Chat OrthoMundi</title>
+
+	<link type="text/css" rel="stylesheet" href="../css/stylesheet.css" />
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans Condensed:300italic,300,700" rel="stylesheet" type="text/css">
+
+
+</head>
+
+<body>
+
+	<header class="homebanner" >
+
+		<!--
+			<h1 class="homebannertext">
+				<a href="http://tutorialzine.com/2014/03/nodejs-private-webchat/" id="logo">Tutorial<span>zine</span></a>
+			</h1>
+		-->
+
+		<style type="text/css">
+
+			header{text-align: center; z-index:1; width:100%; height: 40px; position: fixed; margin-top: 0; top: 0;}
+			ul {width:780px; height: 40px; left:50%; margin-left:-325px; margin-top:27px; position: relative; }
+			ul li {display:block; float:left; margin-right: 20px;}
+			ul li a{color:white; font-family: Yanone; font-size: 26px; text-decoration: none; position:relative;}
+			li:hover{text-decoration: underline;}
+			ul li a img{width:40px;height:40px; margin-top:-15px; display:inline-block; position: absolute; left:-40px;}
+			ul li a p{position:relative; margin-right:40px; font-size:24px; margin-top:-10px;}
+			
+		
+		</style>
+
+		<ul>
+			<li><a href="http://www.orthomundishop.com.br" target="_blank"><img src="../img/cart.png"><p style="margin-left:10px;">Loja Online</p></a></li>
+			<li><a href="http://www.orthomundi.com.br" target="_blank"><img src="../img/site.png" ><p>Site Institucional</p></a></li>
+			<li><a href="http://www.facebook.com/orthomundi" target="_blank"><img src="../img/face.png" ></p>Página no Facebook</p></a></li>
+			<li style="margin-left:40px;"><a href="javascript:void(0)"><img src="../img/fone.png" ><p>0800 510 3001</p></a></li>
+
+		</ul>
+
+	</header>
+
+
+	<section class="section" style="">
+
+		<!-- These elements are displayed as white info cards in the middle of the screen -->
+
+		<div class="connected">
+
+			<!--<img src="../img/unnamed.png" id="creatorImage" />-->
+
+			<div class="infoConnected">
+				<h2>Quem é você?</h2>
+
+				<br/>
+
+				<form class="loginForm">
+					<input type="text" id="yourName" placeholder="Nome (utilizado na loja virtual)" /><br/>
+					<input type="text" id="yourEmail" placeholder="Email (utilizado na loja virtual)" /><br/>
+
+					<input type="submit" id="yourEnter" value="ENTRAR" style="cursor:pointer;"/>
+					
+				</form>
+
+			</div>
+
+		</div>
+
+		<div class="personinside">
+
+			<!--<img src="../img/unnamed.jpg" id="ownerImage" />-->
+			
+			<div class="infoInside">
+
+				<br>
+				<h2>Cliente em espera</h2>
+				<br>
+				
+				<p>Nome: <span class="nickname-chat"></span></p>
+				<!--<p>Email: <span class="email-cliente"></span></p>-->
+
+				<form class="loginForm">
+					<input type="text" id="hisName" placeholder="Nome de atendente" />
+					<!--<input type="text" id="hisEmail" placeholder="Seu email" />-->
+					<input type="submit" id="hisEnter" value="Atender" />
+				</form>
+
+			</div>
+
+		</div>
+
+		<div class="invite-textfield">
+
+			<h2>Aguardando por um atendente...</h2>
+			<!--<h5>Invite a friend by sending them this URL</h5>-->
+			<h5>Por favor, não feche a janela do navegador!</h>
+
+			<!--<div class="link">
+				<a title="Invite a friend" href="" id="link"></a>
+			</div>-->
+
+		</div>
+
+		<div class="left">
+
+			<!--<img src="../public/img/unnamed.jpg" id="leftImage" />-->
+
+			<div class="info">
+				<h2><!--<span class="nickname-left"></span>--> Atendimento encerrado.</h2>
+				<!--<h5>Invite somebody else by sending them this page.</h5>-->
+			</div>
+
+		</div>
+
+		<div class="toomanypeople">
+
+			<h2>Está solicitação de atendimento já está em processo.</h2>
+			<h5>Para criar uma nova solicitação de atendimento <a title="New Room" href="/create" id="room">clique aqui</a></h5>
+
+		</div>
+
+		<div class="nomessages">
+
+			<!--<img src="../public/img/unnamed.jpg" id="noMessagesImage" />-->
+
+			<div class="info">
+				<h2>Você está falando com <span class="nickname-chat"></span>.</h2>
+				<!--<h5>Send them a message from the form below!</h5>-->
+			</div>
+
+		</div>
+
+		<div class="chatscreen">
+
+			<ul class="chats">
+				<!-- The chat messages will go here -->
+			</ul>
+
+		</div>
+
+	</section>
+
+	<footer>
+
+		<form id="chatform">
+
+			<textarea id="message" placeholder="Digite alguma coisa..."></textarea>
+			<input type="submit" id="submit" value="Enviar"/>
+
+		</form>
+
+	</footer>
+
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="../js/moment.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script src="../js/chat.js"></script>
+
+	<script type="text/javascript">
+
+		
+		
+		function notifyMe() {
+
+		  // Let's check if the browser supports notifications
+		  if (!("Notification" in window)) {
+		    alert("Seu navegador não suporta notificações desktop!");
+		  }
+
+		  // Let's check if the user is okay to get some notification
+		  else if (Notification.permission === "granted") {
+		    // If it's okay let's create a notification
+
+		    var notification = new Notification("Nova mensagem:\n"+msgrecebida,{
+		    	icon:'../img/unnamed.png',
+				tag:'note'
+		    });
+
+		  }
+
+		  // Otherwise, we need to ask the user for permission
+		  // Note, Chrome does not implement the permission static property
+		  // So we have to check for NOT 'denied' instead of 'default'
+		  else if (Notification.permission !== 'denied') {
+		    Notification.requestPermission(function (permission) {
+		      // Whatever the user answers, we make sure we store the information
+		      if (!('permission' in Notification)) {
+		        Notification.permission = permission;
+
+		      }
+
+		      // If the user is okay, let's create a notification
+		      if (permission === "granted") {
+
+		      	var icon = instanceOfNotification.icon;
+		      	var icon = '../public/img/unnamed.png';
+		        	var notification = new Notification("Nova mensagem:\n"+msgrecebida,{
+				    	icon:'../img/unnamed.png',
+				    	tag:'note'
+				    });
+		      }
+		    	
+		    	});
+			  }
+
+			  notification.onshow = setInterval(function(){notification.close()},1300);
+
+			  //notification.onclick = notification.close();
+
+			  // At last, if the user already denied any notification, and you 
+			  // want to be respectful there is no need to bother them any more.
+
+			}
+
+	</script>
+
+</body>
+
+</html>
